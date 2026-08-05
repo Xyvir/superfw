@@ -2,6 +2,7 @@ name: SuperFW release
 run-name: Build a full SuperFW release
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'master'
@@ -24,7 +25,7 @@ jobs:
           submodules: 'true'
       - name: Get short SHA
         id: slug
-        run: echo "sha8=$(echo ${GITHUB_SHA} | cut -c1-8)" >> $GITHUB_OUTPUT
+        run: echo "sha8=$(echo ${GITHUB_SHA} \vert{} cut -c1-8)" >> $GITHUB_OUTPUT
       - name: Arrange files
         run: |
           cp res/patches.db patches.db
@@ -83,4 +84,3 @@ jobs:
             artifacts/**/*.fw
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
