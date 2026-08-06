@@ -81,11 +81,13 @@ jobs:
           path: artifacts
       - name: Determine Release Tag
         id: tag
+        shell: bash
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "RELEASE_TAG=v$(date +'\%Y\%m\%d\%H\%M\%S')" >> $GITHUB_ENV
+            TIMESTAMP=$(date +%Y%m%d%H%M%S)
+            echo "RELEASE_TAG=v$TIMESTAMP" >> "$GITHUB_ENV"
           else
-            echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+            echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> "$GITHUB_ENV"
           fi
       - name: Create release and upload firmware
         run: |
