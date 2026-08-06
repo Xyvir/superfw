@@ -82,15 +82,15 @@ jobs:
       - name: Determine Release Tag
         id: tag
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "RELEASE_TAG=v$(date +'\%Y\%m\%d\%H\%M\%S')" >> $GITHUB_ENV
           else
             echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
           fi
       - name: Create release and upload firmware
         run: |
-          gh release create "${RELEASE_TAG}" \
-            --title "Release ${RELEASE_TAG}" \
+          gh release create "${{ env.RELEASE_TAG }}" \
+            --title "Release ${{ env.RELEASE_TAG }}" \
             --generate-notes \
             artifacts/**/*.fw
         env:
