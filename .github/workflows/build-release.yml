@@ -9,6 +9,9 @@ on:
     tags:
       - '*'
 
+permissions:
+  contents: write
+
 jobs:
   build-firmware:
     runs-on: ubuntu-24.04
